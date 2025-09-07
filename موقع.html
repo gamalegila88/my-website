@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>gogoshop - Your Online Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      .hero-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+      .cart-badge {
+        background: #ff9900;
+        color: #232f3e;
+      }
+      .search-bar:focus {
+        outline: none;
+        border-color: #ff9900;
+        box-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+      }
+      .footer-link:hover {
+        color: #ff9900;
+      }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900">
+    <!-- Header -->
+    <header class="bg-gray-900 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-3xl font-bold text-orange-400">gogoshop</h1>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="hover:text-orange-400 transition">Home</a>
+                    <a href="#" class="hover:text-orange-400 transition">Deals</a>
+                    <a href="#" class="hover:text-orange-400 transition">Categories</a>
+                    <a href="#" class="hover:text-orange-400 transition">Sell</a>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input
+                      type="text"
+                      id="search-input"
+                      placeholder="Search products..."
+                      class="search-bar w-64 px-4 py-2 rounded-lg border-2 border-gray-700 bg-gray-800 text-white placeholder-gray-400"
+                    />
+                    <button
+                      onclick="searchProducts()"
+                      class="absolute right-0 top-0 bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded-r-lg"
+                    >
+                      <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <button onclick="toggleCart()" class="relative">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="cart-badge text-xs absolute -top-2 -right-2 px-1 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold text-white mb-4">Welcome to gogoshop</h2>
+            <p class="text-xl text-gray-200 mb-8">Discover amazing products at unbeatable prices</p>
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/306a9985-f717-4816-8deb-d0b4d9aaaf11.png"
+              alt="Vibrant e-commerce banner showing diverse shoppers browsing products in a modern online marketplace with colorful product displays, delivery boxes, and happy customers pointing at screens in a bustling digital shopping environment"
+              class="mx-auto rounded-lg shadow-lg max-w-full h-auto"
+              onerror="this.style.display='none'"
+            />
+            <button class="mt-8 bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition">
+              Shop Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Featured Products</h3>
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg p-8 w-full max-w-md">
+                <h3 class="text-2xl font-bold mb-4">Your Cart</h3>
+                <div id="cart-items" class="space-y-4 mb-4">
+                    <!-- Cart items will be populated here -->
+                </div>
+                <div class="flex justify-between items-center font-bold">
+                    <span>Total: $<span id="cart-total">0</span></span>
+                    <button onclick="closeCart()" class="bg-gray-500 text-white px-4 py-2 rounded">Close</button>
+                    <button 
+  onclick="window.open('https://www.facebook.com/share/176f7uG8id/', '_blank')" 
+  class="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded">
+  Checkout
+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-bold mb-4">Get to Know Us</h4>
+                <ul class="space-y-2">
+                    <li><a href="https://www.facebook.com/profile.php?id=61552690721995" class="footer-link">About gogoshop</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Let Us Help You</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Help Center</a></li>
+                    <li><a href="#" class="footer-link">Shipping Info</a></li>
+                    <li><a href="#" class="footer-link">Returns</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Shop with Us</h4>
+                <ul class="space-y-2">
+                    <li>
+                      <a href="https://www.facebook.com/profile.php?id=61552690721995" target="_blank" rel="noopener noreferrer" class="footer-link"
+                        >Your Account</a
+                      >
+                    </li>
+                    <li><a href="#" class="footer-link">Sell on gogoshop</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Have a Question?</h4>
+              <p>
+  <a href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer" class="hover:text-orange-400 transition">
+    Contact our support team 24/7
+  </a>
+</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="https://www.facebook.com/profile.php?id=61552690721995" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-orange-400 transition">
+                        <i class="fab fa-facebook text-2xl"></i>
+                    </a>
+                    <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="hover:text-orange-400 transition">
+  <i class="fab fa-twitter text-2xl"></i>
+</a>
+                   <a href="https://www.instagram.com/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-orange-400 transition">
+  <i class="fab fa-instagram text-2xl"></i>
+</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 pt-8 border-t border-gray-700">
+            <p>© 2025 gogoshop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+      // Sample product data
+      const products = [
+        {
+          id: 1,
+          name: "Wireless Earbuds",
+          price: 20,
+          image:
+            "https://gizmodo.com/app/uploads/2024/11/airpods-pro-2-apple.jpg",
+          alt: "Wireless earbuds in a sleek black case with charging cable, displayed on a white background with soft shadows for depth",
+        },
+        {
+          id: 2,
+          name: "Smartphone Stand",
+          price: 29.99,
+          image:
+            "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/138d1dbd-9aec-4449-9cad-4bf81efdee21.png",
+          alt: "Adjustable smartphone stand in metallic silver holding a phone upright on a desk with a clock in background",
+        },
+        {
+          id: 3,
+          name: "Fitness Tracker",
+          price: 199.99,
+          image:
+            "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3ad3d2da-ef52-4ff5-a2b5-0e68fffb39ea.png",
+          alt: "Fitness tracker wristband with heart rate monitor and fitness stats display screen in bright colors",
+        },
+        {
+          id: 4,
+          name: "Power Pank",
+          price: 49.99,
+          image:
+            "https://m.media-amazon.com/images/I/51wXGd5W4tL._AC_SL1500_.jpg",
+          alt: "Compact portable charger with USB ports and battery indicator, sitting next to a smartphone on a wooden surface",
+        },
+        {
+          id: 5,
+          name: "Bluetooth Speaker",
+          price: 89.99,
+          image: "https://placehold.co/300x300/667eea/ffffff",
+          alt: "Waterproof Bluetooth speaker in blue with volume buttons and charging port, outdoor theme with rocks",
+        },
+        {
+          id: 6,
+          name: "Laptop Sleeve",
+          price: 39.99,
+          image: "https://placehold.co/300x300/764ba2/ffffff",
+          alt: "Protective laptop sleeve with zipper in brown leather texture, open showing foam padding inside",
+        },
+        {
+          id: 7,
+          name: "Gaming Mouse",
+          price: 59.99,
+          image: "https://placehold.co/300x300/ff9900/000000",
+          alt: "RGB gaming mouse with ergonomic design and clickable scroll wheel on a neon-lit desk",
+        },
+        {
+          id: 8,
+          name: "HD Webcam",
+          price: 79.99,
+          image: "https://placehold.co/300x300/232f3e/ffffff",
+          alt: "High-definition webcam with mic, mounted on a monitor with video call interface in background",
+        },
+      ];
+
+      let cart = [];
+
+      // Load products on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        loadProducts();
+        updateCartCount();
+      });
+
+      function loadProducts() {
+        const grid = document.getElementById("products-grid");
+        products.forEach((product) => {
+          const card = document.createElement("div");
+          card.className =
+            "product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer";
+          card.innerHTML = `
+                    <img src="${product.image}" alt="${product.alt}" class="w-full h-48 object-cover" onerror="this.src='https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bb6af760-a7a3-412d-980e-0215f230e807.png'">
+                    <div class="p-4">
+                        <h4 class="font-bold text-lg mb-2">${product.name}</h4>
+                        <p class="text-gray-600 mb-2">$${product.price}</p>
+                        <button onclick="addToCart(${product.id})" class="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-full">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+          grid.appendChild(card);
+        });
+      }
+
+      function addToCart(productId) {
+        const product = products.find((p) => p.id === productId);
+        if (product) {
+          cart.push(product);
+          updateCartCount();
+          alert("Added to cart!");
+        }
+      }
+
+      function updateCartCount() {
+        document.getElementById("cart-count").textContent = cart.length;
+        document.getElementById("cart-total").textContent = cart
+          .reduce((total, item) => total + item.price, 0)
+          .toFixed(2);
+      }
+
+      function toggleCart() {
+        const modal = document.getElementById("cart-modal");
+        const cartItems = document.getElementById("cart-items");
+        cartItems.innerHTML = "";
+
+        if (cart.length === 0) {
+          cartItems.innerHTML = "<p>Your cart is empty.</p>";
+        } else {
+          cart.forEach((item) => {
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "flex justify-between items-center";
+            itemDiv.innerHTML = `
+                        <span>${item.name}</span>
+                        <span>$${item.price}</span>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">Remove</button>
+                    `;
+            cartItems.appendChild(itemDiv);
+          });
+        }
+
+        modal.classList.toggle("hidden");
+      }
+
+      function removeFromCart(productId) {
+        const index = cart.findIndex((item) => item.id === productId);
+        if (index > -1) {
+          cart.splice(index, 1);
+          updateCartCount();
+          toggleCart(); // Refresh modal
+        }
+      }
+
+      function closeCart() {
+        document.getElementById("cart-modal").classList.add("hidden");
+      }
+
+      function searchProducts() {
+        const query = document.getElementById("search-input").value.toLowerCase();
+        const filtered = products.filter((p) =>
+          p.name.toLowerCase().includes(query)
+        );
+        const grid = document.getElementById("products-grid");
+        grid.innerHTML = "";
+
+        if (filtered.length === 0) {
+          grid.innerHTML =
+            '<p class="text-center text-gray-500 col-span-full">No products found.</p>';
+          return;
+        }
+
+        filtered.forEach((product) => {
+          const card = document.createElement("div");
+          card.className =
+            "product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 cursor-pointer";
+          card.innerHTML = `
+                    <img src="${product.image}" alt="${product.alt}" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/300x300/e2e8f0/666?text=No+Image'">
+                    <div class="p-4">
+                        <h4 class="font-bold text-lg mb-2">${product.name}</h4>
+                        <p class="text-gray-600 mb-2">$${product.price}</p>
+                        <button onclick="addToCart(${product.id})" class="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-full">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+          grid.appendChild(card);
+        });
+      }
+
+      // Search on Enter key press
+      document
+        .getElementById("search-input")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            searchProducts();
+          }
+        });
+    </script>
+</body>
+</html>
